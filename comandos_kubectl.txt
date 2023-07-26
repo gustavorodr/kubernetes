@@ -4,6 +4,7 @@ watch kubectl get pods
 
 minikube 
     service --url <name> --namespace=default           //puxa a url de um nodeport por exemplo
+        -n <namespace>
     node delete <nome>                                 //exclui um node
 
 kubectl
@@ -22,6 +23,7 @@ kubectl
         nodes -o yaml | grep address                        pegas os addresses dos nodeports
             --show-labels
         jobs --watch                                        //monitora os jobs
+        svc -o wide                                         //pega infos dos serviços
     apply -f <arquivo>.yaml                                 //applica uma configuração
         --record                                            // tag deprecada que marca o change cause
         --namespace=<name>                                  //aplica em um name space especifico
@@ -66,6 +68,11 @@ kubectl
         <label>=<value>                                     //atribui uma label
     logs pod name
     patch cj <nome>                                         //pausa um cronjob
+    port-forward <pod> <localport>:<containerport> -n <namespace>//configura um forward pra acessar o pod sem service
+    expose deployment <nome> -n <namespace> --type=NodePort --name=<serviço>//cria um serviço para o deploy
+        --dry-run=client                                    //testa comando antes de executar
+    KUBE_EDITOR="nano" kubectl edit service <name>          //etita o yaml de um serviço
+    set image deployment/<name> <container>=<image>         //muda a imagem do container
 
 mkdir certificate
 openssl genrsa -out auditor.key 2048                        // gera uma chave de segurança rsa

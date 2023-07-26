@@ -1,0 +1,23 @@
+minikube install (Local Kubernetes cluster)
+
+1. Open download folder
+$ cd Download
+
+2. Download minikube
+$ curl -Lo minikube https://storage.googleapis.com/minikube/releases/v1.26.0/minikube-linux-amd64
+
+3. Set permission
+$ chmod +x minikube
+
+4.Install minikube
+$ sudo install minikube /usr/local/bin/
+
+5. Configure user group
+$ sudo usermod -aG docker $USER
+
+6. Reboot Linux
+$ sudo reboot
+
+7. Initialization
+$ minikube delete
+$ minikube start

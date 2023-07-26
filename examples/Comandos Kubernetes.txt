@@ -44,7 +44,14 @@ kubectl
     create
         namespace <name> --save-config                      //cria um namespace pela linha de comando
     config
+        view                                                //ve as configurações
         set-context --current --namespace=<name>            //muda o name space current do default para outro
+            <name> --cluster=<name> --user=<name>           //configura o contexto para um usuario em um cluster
+        set-credentials <name>                              //cria uma credencial de acesso
+            --client-certificate=<file>                     //indica o certificado do usuario
+            --client-key=<file>                             //indica gerada para o usuario
+        delete-context <name>                               //deleta um contexto de acesso
+        unset users.<name>                                  //remove o usuario
     run <pod_name> --image <imagen>                         //cria um pod por linha de comando
     delete
         pods <name> --namespace=<name>
@@ -60,3 +67,8 @@ kubectl
     logs pod name
     patch cj <nome>                                         //pausa um cronjob
 
+mkdir certificate
+openssl genrsa -out auditor.key 2048                        // gera uma chave de segurança rsa
+openssl req -new -key auditor.key -out auditor.csr -subj "/CN=auditor/O=MyCompany"//gera csr com informações de dominio e organização
+openssl x509 -req -in auditor.csr -CA ~/.minikube/ca-crt -CAkey ~/.minikube/ca.key -CAcreateserial -out auditor.crt -days 365//gera o certificado valido por 365 dias
+rm -r certificate

@@ -1,0 +1,62 @@
+sempre usar dois espaços em vez de tab no .yaml
+
+watch kubectl get pods
+
+minikube 
+    service --url <name> --namespace=default           //puxa a url de um nodeport por exemplo
+    node delete <nome>                                 //exclui um node
+
+kubectl
+    get
+        all
+        services
+            --all-namespaces -o wide                        //pega todos os namespaces
+            <name>                                          pega o service especifico
+        deployments
+        replicasets
+        namespaces ( ns )
+        pods
+            -n <namespace>                                  //especifica o namespace
+            -o wide                                        //pega mais informações
+            --field-selector spec.nodeme=<name>            //seleciona um node especifico
+        nodes -o yaml | grep address                        pegas os addresses dos nodeports
+            --show-labels
+        jobs --watch                                        //monitora os jobs
+    apply -f <arquivo>.yaml                                 //applica uma configuração
+        --record                                            // tag deprecada que marca o change cause
+        --namespace=<name>                                  //aplica em um name space especifico
+    rollout 
+        status deployment.apps/<deploy_name>                //status do deploy
+        history dedeployment.apps/<deploy_name>             // verifica revisões de um deploy
+            --revision=<numero>                             // pega todos os dados de uma revisão específica
+        undo                                                // faz o rollback, volta para a revisão anterior
+            --to-revision=<numero>                          // volta para um revisão específica
+        pause deployment.apps/<deploy_name>                 // pausa a aplicação de mudanças
+        resume deployment.apps/<deploy_name>                // continua a aplicação de mudanças
+    describe 
+        deployment.app/<deploy_name>                        // tras varias informações sobre o deploy
+            | grep StrategyType                             // pega qual o tipo de estratégia do deploy
+        pods <pod_name>                                     // tras varias informações sobre o pod
+            | grep IP                                       // pega o ip do pod
+        services <name>
+    scale deployment.app/<deploy_name> --replicas=<numero>  // escala replicas pela linha de comando
+    exec -it <pod_name> -- bash                             // pega o console do pod
+    create
+        namespace <name> --save-config                      //cria um namespace pela linha de comando
+    config
+        set-context --current --namespace=<name>            //muda o name space current do default para outro
+    run <pod_name> --image <imagen>                         //cria um pod por linha de comando
+    delete
+        pods <name> --namespace=<name>
+        namespace <nome>
+        services <name> --namespace=<name>
+        all --all                                           //cuidado
+            --all-namespaces
+            --namespace=<name>
+        ds <name>                                           //deleta um deamon set
+            --cascade=orphan                                //deixa os podes orfãos
+    label nodes <nome> <label>                              //remove a label de um node
+        <label>=<value>                                     //atribui uma label
+    logs pod name
+    patch cj <nome>                                         //pausa um cronjob
+
